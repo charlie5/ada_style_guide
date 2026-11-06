@@ -1,6 +1,6 @@
 # 7. Subprograms, Parameters and Overloading
 
-Rules `SUB-*`. Source: Ada 95 Quality and Style (Q&S95) §5.2 Parameter Lists, §5.7.3 to §5.7.5 Overloading; Q&S83 §5.2, §5.7. Structural rules about subprograms (single action, function side effects) are [STR-04](04-structure.md) and [STR-05](04-structure.md); layout of parameter lists is [LAY-05](01-layout.md).
+Rules `SUB-*`. Source: Ada 95 Quality and Style (Q&S95) §5.2 Parameter Lists, §5.7.3 to §5.7.5 Overloading; Q&S83 §5.2, §5.7. Structural rules about subprograms (single action, function side effects) are [STR-04](04-structure.md) and [STR-05](04-structure.md).
 
 ---
 

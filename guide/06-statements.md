@@ -207,7 +207,7 @@ P_And_Q_Processing :
 
 ## STM-15 No goto
 
-**Rule.** Do not use `goto`. Ada's loop exits and exceptions cover the classic uses. If one must remain, surround both the `goto` and the label with blank lines and comment at the label where the gotos are.
+**Rule.** Do not use `goto`. Ada's loop exits and exceptions cover the classic uses. If one must remain, comment at the label where the gotos come from.
 
 **Detect.** `auto`. `\bgoto\b`, `<<\w+>>`.
 
@@ -219,7 +219,7 @@ P_And_Q_Processing :
 
 ## STM-16 Few return statements, made visible
 
-**Rule.** Minimise `return` statements in a subprogram. Where several are needed, put them at the same level (the arms of one `case` or `if`) rather than scattered through nested code. A Boolean function with `return True`/`return False` in nested branches should return the condition itself. Highlight remaining returns with white space or a comment. Do not contort the structure merely to reach a single return.
+**Rule.** Minimise `return` statements in a subprogram. Where several are needed, put them at the same level (the arms of one `case` or `if`) rather than scattered through nested code. A Boolean function with `return True`/`return False` in nested branches should return the condition itself. Highlight remaining returns with a comment. Do not contort the structure merely to reach a single return.
 
 **Detect.** `auto`. More than three `return` statements in one body; `return True;` and `return False;` both present; `return` at nesting depth 3 or more.
 

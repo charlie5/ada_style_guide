@@ -1,6 +1,6 @@
 # 3. Comments
 
-Rules `COM-*`. Source: Ada 95 Quality and Style (Q&S95) §3.3; Q&S83 §3.3.
+Rules `COM-*`. Source: Ada 95 Quality and Style (Q&S95) §3.3; Q&S83 §3.3. The file-header guideline of §3.3.2 (copyright, author, revision history at the top of every file) is not adopted: ownership and history belong to version control, and header form is a project matter. COM-02 is retired and its number is not reused.
 
 The guides' position: readability comes from naming and structure, not from comment volume. Comments exist to say what cannot be said in Ada, to state intent, to mark structure, and to flag deliberate deviations. A comment that paraphrases the code is a liability because nothing keeps it in step with the code. When reviewing, removing a bad comment is as valid a finding as adding a missing one.
 
@@ -10,27 +10,15 @@ Comment-text changes never alter program behaviour, so every rule here is safe t
 
 ## COM-01 General comment discipline
 
-**Rule.** Make the code clear enough to need few comments. Never repeat in a comment what the code already says. Where a comment is needed, make it concise, complete, grammatical and correctly spelled. Make comments visually distinct from code (indented with the code, grouped into headers, boxed with dashed lines). Structure header comments so a tool can extract them.
+**Rule.** Make the code clear enough to need few comments. Never repeat in a comment what the code already says. Where a comment is needed, make it concise, complete, grammatical and correctly spelled. Structure header comments so a tool can extract them.
 
 **Why.** Duplicated information is work to write, drifts out of date at the first change, and hides the few comments that matter. Automatically generated stale comments are worse than hand-written ones because readers trust them.
 
-**Detect.** `assisted`. Comment lines whose words largely repeat the identifiers on the next code line; comments ending in a different column from the code they annotate; comment density above roughly one comment line per code line in a body.
+**Detect.** `assisted`. Comment lines whose words largely repeat the identifiers on the next code line; comment density above roughly one comment line per code line in a body.
 
 **Apply.** `assisted`. Delete paraphrasing comments; fix spelling; keep comments that explain intent.
 
 **Source.** Q&S95 §3.3, §3.3.1.
-
----
-
-## COM-02 File header
-
-**Rule.** Put a header at the top of every source file carrying ownership (copyright notice), responsibility (author and department or team, not phone numbers or office locations, which go stale) and, if the configuration management tool does not provide it, a revision history. The guide's own note: with modern version control the revision history in the header is superfluous and less reliable than the tool's; prefer the tool.
-
-**Detect.** `auto`. First non-blank line of a `.ads`/`.adb` file is not a comment, or the first comment block lacks a copyright or licence line.
-
-**Apply.** `auto` for inserting a header template matching the project's existing headers; `assisted` for choosing its content. Do not add revision-history blocks to a project under version control.
-
-**Source.** Q&S95 §3.3.2.
 
 ---
 
@@ -99,7 +87,7 @@ Node_Already_Defined : exception;   --  Raised when an attempt is made to
 
 ## COM-06 Statement comments
 
-**Rule.** Minimise comments among statements. Comment only what is not obvious: why a construct was chosen, a compiler-bug workaround, non-portable or environment-dependent code, a deliberately lower-level solution and the higher-level attempt that failed. Comment intentional omissions ("not deallocated here because ...") so a maintainer does not "fix" them. Never paraphrase the code; never describe what another unit does internally (that violates information hiding and goes stale). Make the remaining comments visually distinct.
+**Rule.** Minimise comments among statements. Comment only what is not obvious: why a construct was chosen, a compiler-bug workaround, non-portable or environment-dependent code, a deliberately lower-level solution and the higher-level attempt that failed. Comment intentional omissions ("not deallocated here because ...") so a maintainer does not "fix" them. Never paraphrase the code; never describe what another unit does internally (that violates information hiding and goes stale).
 
 **Detect.** `assisted`. Comments immediately preceding a statement that restate it (`-- Increment count` before `Count := Count + 1`); comments describing the called subprogram's algorithm; a comment on nearly every line.
 
@@ -125,7 +113,7 @@ Sum_Integers_Converted_From_Strings :
 
 ## COM-07 Marker comments
 
-**Rule.** Use the dashed-line pagination markers of [LAY-07](01-layout.md#lay-07-pagination-mark-unit-boundaries). Repeat the unit name after `begin` when the `begin` of a package body, subprogram body, task body or block is far from its first line because of declarations (`begin -- Abstract_Strings`). For long or deeply nested `if` and `case` statements, mark `end if;` / `end case;` with a comment summarising the condition, and mark a distant `else` with a comment stating what is true there. Do not do this for loops and blocks: name them instead, so the compiler checks the matching `end loop Name;` / `end Name;`.
+**Rule.** Repeat the unit name after `begin` when the `begin` of a package body, subprogram body, task body or block is far from its first line because of declarations (`begin -- Abstract_Strings`). For long or deeply nested `if` and `case` statements, mark `end if;` / `end case;` with a comment summarising the condition, and mark a distant `else` with a comment stating what is true there. Do not do this for loops and blocks: name them instead, so the compiler checks the matching `end loop Name;` / `end Name;`.
 
 **Why.** Marker comments resolve "where am I" over a visual distance, particularly across page breaks. Overdone, they are clutter: visual distance is the criterion.
 
@@ -141,8 +129,7 @@ Sum_Integers_Converted_From_Strings :
 
 | ID | Rule | Apply |
 |----|------|-------|
-| COM-01 | No paraphrase; concise, correct, visually distinct | assisted |
-| COM-02 | File header with ownership and responsibility; history belongs to version control | auto |
+| COM-01 | No paraphrase; concise, correct, extractable headers | assisted |
 | COM-03 | Spec header: purpose, protocol, exceptions, global effects, performance; no parameter lists | assisted |
 | COM-04 | Body header: how and why, portability, decisions, discarded alternatives; omit if empty | assisted |
 | COM-05 | Document data structures, invariants and exception conditions | assisted |

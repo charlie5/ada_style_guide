@@ -1,6 +1,6 @@
 # 2. Spelling and Naming
 
-Rules `NAM-*`. Source: Ada 95 Quality and Style (Q&S95) §3.1 Spelling, §3.2 Naming Conventions; Q&S83 §3.1, §3.2.
+Rules `NAM-*`. Source: Ada 95 Quality and Style (Q&S95) §3.1 Spelling, §3.2 Naming Conventions; Q&S83 §3.1, §3.2. The capitalisation and digit-grouping guidelines of §3.1.2 and §3.1.3 are presentation, left to the project's formatter and compiler style checks; NAM-03 is retired and its number is not reused.
 
 Naming carries more of a program's readability than comments do. Renames are safe to apply mechanically only when every use site is updated and the name is not part of a published interface; see [00-procedure.md](00-procedure.md) for the rename protocol.
 
@@ -20,43 +20,23 @@ Naming carries more of a program's readability than comments do. Renames are saf
 
 ---
 
-## NAM-02 Numeric literals
+## NAM-02 Radix and exact fractions in literals
 
-**Rule.** Write numbers consistently. Use the radix appropriate to the problem (hex for addresses and bit masks, decimal otherwise). Separate digit groups with underscores the way commas or spaces would in prose: decimal and octal by threes left of the point and by fives right of it, hexadecimal by fours. Capitalise `E` in exponents consistently (the guide uses upper case). Write hex digits `A`..`F` in one case consistently (the guide uses upper case). Express exact fractions by a static expression, not a decimal approximation.
+**Rule.** Write each literal in the radix appropriate to the problem: hexadecimal (or octal, binary) for addresses, bit masks and register values, decimal otherwise. Express an exact fraction as a static expression (`1.0 / 3.0`), not as a decimal approximation.
 
-**Detect.** `auto`. Decimal integer literals of 5+ digits without underscores: `\b[0-9]{5,}\b`. Lower-case `e` exponents `[0-9]e[+-]?[0-9]`. Mixed-case hex `16#[0-9a-fA-F]*[a-f][0-9a-fA-F]*[A-F]`.
+**Why.** A literal in the problem's own radix reads as the quantity it denotes. A static expression is evaluated exactly at compile time, whereas a truncated decimal silently loses accuracy; Q&S95 also notes that a radix in which the fraction terminates (`3#0.1#`) may convert more accurately to the machine base.
 
-**Apply.** `auto`. Inserting underscores and re-casing exponents and hex digits does not change the value.
+**Detect.** `assisted`. Decimal literals used as masks or addresses: `\b(and|or|xor)\s+[0-9]{2,}\b`, `'Address use [0-9]`, `Address => [0-9]`. Real named numbers with a repeating digit run: `0\.(3{4,}|6{4,}|1{4,}|9{4,})`.
+
+**Apply.** `assisted`. Rewriting a literal in another radix does not change its value but is a readability judgement; replacing an approximation by the exact expression changes the value by the truncation error, so confirm that nothing depends on the old value.
 
 **Example.**
 ```ada
-type Maximum_Samples     is range          1 .. 1_000_000;
-type Legal_Hex_Address   is range   16#0000# ..   16#FFFF#;
-Avogadro_Number : constant := 6.02216_9E+23;
-One_Third       : constant := 1.0 / 3.0;    --  not 0.33333_33333
+type Legal_Hex_Address is range 16#0000# .. 16#FFFF#;
+One_Third : constant := 1.0 / 3.0;    --  not 0.33333_33333
 ```
 
 **Source.** Q&S95 §3.1.2.
-
----
-
-## NAM-03 Capitalisation
-
-**Rule.** Reserved words in lower case. All other identifiers in mixed case with a capital starting each underscore-separated word (`Second_Of_Day`). Abbreviations and acronyms in upper case (`DOD_STD_MSG_FMT`, `IO`), from a project-wide list. Ada is case-insensitive, so this is purely presentational, but a reference to an identifier should be spelled the same way as its declaration.
-
-**Why.** Makes reserved words visually distinct from identifiers so the reader can focus on structure, and makes identifiers easy to scan for.
-
-**Detect.** `auto`. Reserved words in upper or mixed case: `\b(IF|THEN|ELSE|END|LOOP|PROCEDURE|FUNCTION|PACKAGE|BEGIN|IS|RETURN|WHEN|CASE|WHILE|FOR|DECLARE|EXCEPTION|RAISE|TYPE|SUBTYPE|RECORD|ARRAY|OF|IN|OUT|CONSTANT|NULL|OTHERS|AND|OR|NOT|XOR)\b` and their `If`/`Then` forms. All-upper-case identifiers that are not acronyms: `\b[A-Z]{2,}_[A-Z_]+\b`. All-lower-case multi-word identifiers: `\b[a-z]+_[a-z_]+\b` outside strings, comments and pragmas. GNAT: `-gnatyk` (keyword casing), `-gnatyr` (reference casing matches declaration).
-
-**Apply.** `auto`. Re-casing never changes meaning. Respect a project's acronym list; if none exists, keep existing upper-case runs of 2 to 4 letters as acronyms.
-
-**Example.**
-```ada
-type Noon_Relative_Time is (Before_Noon, After_Noon, High_Noon);
-Current_Time := Second_Of_Day (Calendar.Seconds (Calendar.Clock));
-```
-
-**Source.** Q&S95 §3.1.3; Q&S83 §3.1.3.
 
 ---
 
@@ -207,8 +187,7 @@ Area := Pi * Radius**2;                                              --  not 3.1
 | ID | Rule | Apply |
 |----|------|-------|
 | NAM-01 | Underscores between words | assisted |
-| NAM-02 | Consistent literals: radix, digit grouping, `E`, hex case | auto |
-| NAM-03 | Lower-case reserved words, Mixed_Case identifiers, UPPER acronyms | auto |
+| NAM-02 | Radix appropriate to the problem; exact fractions as static expressions | assisted |
 | NAM-04 | Abbreviations only from a project list; prefer short synonyms | assisted |
 | NAM-05 | Self-documenting names; no name reuse across entity kinds | assisted |
 | NAM-06 | Singular general nouns for types; no `_Type` unless project convention; no predefined names | assisted |

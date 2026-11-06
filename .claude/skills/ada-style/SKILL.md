@@ -1,6 +1,6 @@
 ---
 name: ada-style
-description: Review an Ada codebase against the Ada style guide in guide/ and suggest or apply style improvements. Use when asked to review, check, lint, clean up, modernise or apply style rules to Ada sources (.ads/.adb), or when asked about Ada style, naming, layout, comments, exceptions, tasking, portability or Ada 2005/2012/2022 modernisation.
+description: Review an Ada codebase against the Ada style guide in guide/ and suggest or apply style improvements. Use when asked to review, check, lint, clean up, modernise or apply style rules to Ada sources (.ads/.adb), or when asked about Ada style, naming, comments, exceptions, tasking, portability or Ada 2005/2012/2022 modernisation.
 ---
 
 # Ada style review
@@ -18,12 +18,13 @@ GUIDE = guide
 3. Decide the scope from the user's request:
    - "review" / "check" / "what would you change": stages 1 to 4 only; produce the report.
    - "apply" / "fix" / "clean up": stages 1 to 5; apply `auto` rules, confirm `assisted` ones individually, leave `advisory` ones in the report.
-   - A named area ("naming", "exceptions", "modernise to Ada 2012"): load only the matching rule files (see the table in `$GUIDE/README.md`) plus `01-layout.md` if layout is implicated.
+   - A named area ("naming", "exceptions", "modernise to Ada 2012"): load only the matching rule files (see the table in `$GUIDE/README.md`).
    - Default when unspecified: the whole guide, report only.
 4. Load rule files lazily: `$GUIDE/rules-index.md` to pick rules, then the full entry in the numbered file for any rule you detect or apply. Do not paste rule text into the report; cite the ID and give the finding.
 5. Gate `$GUIDE/14-modern-ada.md` on the project's language version as the procedure says; never apply a feature newer than the project compiles with.
-6. Build after every batch of applied changes. Report build and test results faithfully.
+6. Never apply `auto` a rule on the overrides list built in the procedure's stage 1 step 3 (rules a written project standard contradicts); report it and let the user choose.
+7. Build after every batch of applied changes. Report build and test results faithfully.
 
 ## Output
 
-The report format is in `$GUIDE/00-procedure.md` section 4. Lead with the summary table. Findings are `path:line  RULE-ID  one line`, grouped by rule, most valuable rules first. End with the questions the user must answer and the list of rules available on language upgrade.
+The report format is in `$GUIDE/00-procedure.md` section 4. Lead with the summary table. Findings are `path:line  RULE-ID  one line`, grouped by rule, most valuable rules first. Findings for rules the project's written standard contradicts go in their own section, one row per rule, not among the findings. End with the questions the user must answer and the list of rules available on language upgrade.

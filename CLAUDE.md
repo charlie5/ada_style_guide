@@ -8,14 +8,14 @@ A Claude Code AI guide that suggests and applies style improvements to an Ada co
 
 ## Layout
 
-- `guide/` is the deliverable: a rule-based Ada style guide written for Claude Code. `guide/README.md` explains the rule format, apply levels and sources; `guide/00-procedure.md` is the review procedure; `guide/01-*.md` to `guide/15-*.md` hold the rules (`LAY`, `NAM`, `COM`, `STR`, `TYP`, `STM`, `SUB`, `EXC`, `CON`, `POR`, `REU`, `OOP`, `PRF`, `MOD`, `RAT`); `guide/rules-index.md` is generated from the checklist tables at the end of each rule file.
+- `guide/` is the deliverable: a rule-based Ada style guide written for Claude Code. `guide/README.md` explains the rule format, apply levels and sources; `guide/00-procedure.md` is the review procedure; `guide/02-*.md` to `guide/15-*.md` hold the rules (`NAM`, `COM`, `STR`, `TYP`, `STM`, `SUB`, `EXC`, `CON`, `POR`, `REU`, `OOP`, `PRF`, `MOD`, `RAT`); `guide/rules-index.md` is generated from the checklist tables at the end of each rule file.
 - `.claude/skills/ada-style/SKILL.md` is the skill that drives a review; invoke it with `/ada-style` or by asking for an Ada style review.
 - `corpus/` is the source material (untracked in git). Treat it as read-only; do not edit the documents in it.
 - There is no Ada source code, build system or test suite in this repository. `.gitignore` excludes GNAT build products (`*.o`, `*.ali`) for any Ada code added later.
 
 ## Maintaining the guide
 
-- Every rule keeps the entry shape described in `guide/README.md` (Rule, Why, Detect, Apply, Example, Source) and a stable ID. Add new rules at the end of a file's numbering; do not renumber.
+- Every rule keeps the entry shape described in `guide/README.md` (Rule, Why, Detect, Apply, Example, Source) and a stable ID. Add new rules at the end of a file's numbering; do not renumber. A retired rule leaves a gap in the numbering; say so in the file's introduction, as `02-naming.md` does for NAM-03.
 - Each rule file ends with a `## Checklist` table (`| ID | Rule | Apply |`; `14-modern-ada.md` has an extra `Since` column). Regenerate `guide/rules-index.md` after editing a checklist:
 
   ```sh

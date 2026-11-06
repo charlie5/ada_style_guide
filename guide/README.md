@@ -9,8 +9,7 @@ Start with [00-procedure.md](00-procedure.md), which says how to run a review. T
 | File | Rules | Covers |
 |------|-------|--------|
 | [00-procedure.md](00-procedure.md) | | How to review and apply: inventory, project profile, detection, findings, apply protocol |
-| [01-layout.md](01-layout.md) | `LAY` | Spacing, indentation, alignment, blank lines, pagination, line length |
-| [02-naming.md](02-naming.md) | `NAM` | Spelling, casing, abbreviations, names for types, objects, units, constants, exceptions |
+| [02-naming.md](02-naming.md) | `NAM` | Spelling, abbreviations, literals, names for types, objects, units, constants, exceptions |
 | [03-comments.md](03-comments.md) | `COM` | File, specification and body headers; data, statement and marker comments |
 | [04-structure.md](04-structure.md) | `STR` | Files and units, child packages, cohesion, interfaces, visibility, `use` and `renames` |
 | [05-types.md](05-types.md) | `TYP` | Declaring types, data structures, dynamic data, unchecked features, initialisation |
@@ -43,7 +42,7 @@ Every rule has the same shape:
 
 ## Precedence
 
-1. **The project's own consistent convention beats the guide's default.** Where a project is consistent (2-space indentation, `_Type` suffixes, prefixed notation everywhere), the guide's job is to find the inconsistencies, not to impose its numbers. The guide says so itself: "Above all, be consistent across your entire project."
+1. **The project's own consistent convention beats the guide's default.** Where a project is consistent (`_Type` suffixes, prefixed notation everywhere, `use` clauses confined to bodies), the guide's job is to find the inconsistencies, not to impose its numbers. The guide says so itself: "Above all, be consistent across your entire project." A written project standard goes further: the procedure reads it in full, lists the rules it contradicts as overrides, and never applies those rules `auto` ([00-procedure.md](00-procedure.md), stage 1 step 3).
 2. **Readability beats performance unless a measurement says otherwise** ([13-performance.md](13-performance.md)).
 3. **Language version gates the modern rules.** Nothing from [14-modern-ada.md](14-modern-ada.md) is applied to code compiled with an earlier standard; it is reported as available on upgrade.
 4. **Portability rules tighten other rules only when portability is a stated goal.**
@@ -54,7 +53,7 @@ The corpus is under `corpus/` in this repository, by language revision.
 
 | Source | Cited as | Role |
 |--------|----------|------|
-| *Ada 95 Quality and Style: Guidelines for Professional Programmers* (SPC, 1995) | Q&S95 §x.y | Primary source for files 01 to 13. Every guideline bullet of chapters 2 to 10 is represented. |
+| *Ada 95 Quality and Style: Guidelines for Professional Programmers* (SPC, 1995) | Q&S95 §x.y | Primary source for files 02 to 13. Chapter 2 (source code presentation) and the capitalisation and digit-grouping guidelines of §3.1 are deliberately omitted: formatting is left to the project's formatter and compiler style checks. |
 | *Ada '83 Quality and Style* (SPC, 1992) | Q&S83 §x.y | Predecessor with the same section structure; cited for continuity. Its Ada 83 workarounds (no child units, no controlled types, rendezvous-only sharing) are not repeated. |
 | Wikibooks *Ada Style Guide* (2013 build; `corpus/2005` and `corpus/2012`) | not cited | On inspection this is the Ada 95 guide reprinted with section numbers shifted by one and the exception chapters omitted; it adds no rules. |
 | *Rationale for the Design of the Ada Programming Language* (1986) | Ada 83 Rationale §x.y | File 15. |
